@@ -1,5 +1,7 @@
 /**
  * Created by James on 4/6/2015.
+ *
+ * Used for Accessing Package objects
  */
 var express = require('express');
 var router = express.Router();
