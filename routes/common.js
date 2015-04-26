@@ -13,6 +13,9 @@ function verifySession(sessionId, callback){
             console.error(err);
             callback(false);
         }
+        else if(row == undefined){
+            callback(false);
+        }
         else{
             var cTime = new Date();
             var eTime = new Date(row.expire);

@@ -53,12 +53,9 @@ router.get('/active', function(req, res){
 
 /* HTTP PUT Actions */
 router.put('/changepwd/:userid', function(req, res){
-   common.verifySession(1234321, function(valid){
+    console.log(JSON.stringify(req.body));
+   common.verifySession(req.headers.sessionid, function(valid){
       if(valid){
-          console.log(JSON.stringify(req.headers));
-          console.log(JSON.stringify(req.params));
-          console.log(JSON.stringify(req.body));
-          console.log(JSON.stringify(req.query));
           var params = [req.headers.newpassword, req.headers.oldpassword, req.params.userid];
           console.log(JSON.stringify(params));
           dataDb.run('UPDATE Users SET password=? WHERE password=? AND user_id=?', params, function(err){
@@ -115,7 +112,7 @@ router.put('/activate/:userid', function(req, res){
 /* HTTP POST Actions */
 router.post('/login', function(req, res){
    //no session, return a session
-    dataDb.get('SELECT user_id, user_name, first_name, last_name, administrator FROM Users WHERE user_name=? AND password=? AND active=1', [req.headers.username, req.headers.password], function(err, row){
+    dataDb.get('SELECT user_id, user_name, first_name, last_name, administrator FROM Users WHERE user_name=? AND password=? AND active=1', [req.body.username, req.body.password], function(err, row){
        if(err){
            console.error(err);
            common.returnError(res, 'database error');
