@@ -6,6 +6,9 @@ var string = require('string');
 var common = require("./common.js");
 
 /* HTTP GET Actions */
+router.get('/', function (req, res){
+   res.render('login', { title: 'Login' });
+});
 router.get('/inactive', function (req, res){
     common.verifySession(req.headers.sessionid, function(valid, userid) {
         datadb.get('SELECT administrator FROM Users WHERE user_id=?', [userid], function (err, row) {
